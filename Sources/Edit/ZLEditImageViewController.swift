@@ -1557,15 +1557,15 @@ public class ZLDrawPath: NSObject {
 // MARK: 马赛克path
 public class ZLMosaicPath: NSObject {
     
-    let path: UIBezierPath
+    public let path: UIBezierPath
     
-    let ratio: CGFloat
+   public let ratio: CGFloat
     
-    let startPoint: CGPoint
+   public let startPoint: CGPoint
     
-    var linePoints: [CGPoint] = []
+   public var linePoints: [CGPoint] = []
     
-    init(pathWidth: CGFloat, ratio: CGFloat, startPoint: CGPoint) {
+    public init(pathWidth: CGFloat, ratio: CGFloat, startPoint: CGPoint) {
         self.path = UIBezierPath()
         self.path.lineWidth = pathWidth
         self.path.lineCapStyle = .round
@@ -1578,7 +1578,7 @@ public class ZLMosaicPath: NSObject {
         super.init()
     }
     
-    func addLine(to point: CGPoint) {
+   public func addLine(to point: CGPoint) {
         self.path.addLine(to: point)
         self.linePoints.append(CGPoint(x: point.x / self.ratio, y: point.y / self.ratio))
     }

@@ -233,7 +233,7 @@ public struct ZLLocalLanguageKey: Hashable {
     
 }
 
-func localLanguageTextValue(_ key: ZLLocalLanguageKey) -> String {
+public func localLanguageTextValue(_ key: ZLLocalLanguageKey) -> String {
     if let value = ZLCustomLanguageDeploy.deploy[key] {
         return value
     }

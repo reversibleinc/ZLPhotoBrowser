@@ -269,7 +269,7 @@ public class ZLImageClipRatio: NSObject {
     
     public let whRatio: CGFloat
     
-    let isCircle: Bool
+    public let isCircle: Bool
     
     @objc public init(title: String, whRatio: CGFloat, isCircle: Bool = false) {
         self.title = title

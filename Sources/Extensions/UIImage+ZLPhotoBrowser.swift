@@ -240,7 +240,7 @@ extension UIImage {
     }
 
     // 旋转方向
-    func rotate(orientation: UIImage.Orientation) -> UIImage {
+    public func rotate(orientation: UIImage.Orientation) -> UIImage {
         guard let imagRef = self.cgImage else {
             return self
         }
@@ -333,15 +333,16 @@ extension UIImage {
     }
     
     // 加马赛克
-    func mosaicImage() -> UIImage? {
+    public func mosaicImage(_ scale: CGFloat? = nil) -> UIImage? {
         guard let currCgImage = self.cgImage else {
             return nil
         }
-        
+        var realScale = scale == nil ? size.width * size.height / 250000 : scale!
+        realScale = realScale < 20.0 ? 20.0 : realScale
         let currCiImage = CIImage(cgImage: currCgImage)
         let filter = CIFilter(name: "CIPixellate")
         filter?.setValue(currCiImage, forKey: kCIInputImageKey)
-        filter?.setValue(20, forKey: kCIInputScaleKey)
+        filter?.setValue(realScale, forKey: kCIInputScaleKey)
         guard let outputImage = filter?.outputImage else { return nil }
         
         let context = CIContext()
@@ -365,7 +366,7 @@ extension UIImage {
     }
     
     /// Processing speed is better than resize(:) method
-    func resize_vI(_ size: CGSize) -> UIImage? {
+    public func resize_vI(_ size: CGSize) -> UIImage? {
         guard  let cgImage = self.cgImage else { return nil }
         
         var format = vImage_CGImageFormat(bitsPerComponent: 8, bitsPerPixel: 32, colorSpace: nil,
@@ -415,7 +416,7 @@ extension UIImage {
         return ci
     }
     
-    func clipImage(angle: CGFloat, editRect: CGRect, isCircle: Bool) -> UIImage? {
+   public func clipImage(angle: CGFloat, editRect: CGRect, isCircle: Bool) -> UIImage? {
         let a = ((Int(angle) % 360) - 360) % 360
         var newImage = self
         if a == -90 {
@@ -485,7 +486,7 @@ extension UIImage {
     ///   - brightness: value in [-1, 1]
     ///   - contrast: value in [-1, 1]
     ///   - saturation: value in [-1, 1]
-    func adjust(brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
+    public func adjust(brightness: Float, contrast: Float, saturation: Float) -> UIImage? {
         guard let ciImage = toCIImage() else {
             return self
         }

@@ -70,7 +70,7 @@ extension UIControl {
         self.zl_insets = insets
     }
     
-    func zl_enlargeValidTouchArea(inset: CGFloat) {
+   public func zl_enlargeValidTouchArea(inset: CGFloat) {
         guard inset != 0 else {
             return
         }

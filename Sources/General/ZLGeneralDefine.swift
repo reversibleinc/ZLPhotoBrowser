@@ -48,11 +48,11 @@ struct ZLLayout {
     
 }
 
-func zlRGB(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor {
+public func zlRGB(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor {
     return UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
 }
 
-func getImage(_ named: String) -> UIImage? {
+public func getImage(_ named: String) -> UIImage? {
     if ZLCustomImageDeploy.imageNames.contains(named), let image = UIImage(named: named) {
         return image
     }

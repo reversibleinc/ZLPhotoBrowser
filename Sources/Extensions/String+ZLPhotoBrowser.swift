@@ -39,7 +39,8 @@ extension String {
         
         let size = attContent.boundingRect(with: limitSize, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).size
         
-        return CGSize(width: ceil(size.width), height: ceil(size.height))
+        // 因字体原因导致width计算有偏差，加一个因素
+        return CGSize(width: ceil(size.width) * 1.1, height: ceil(size.height))
     }
     
 }

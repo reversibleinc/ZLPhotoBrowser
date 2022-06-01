@@ -94,6 +94,9 @@ public class ZLPhotoPreviewSheet: UIView {
     ///  - params3: is full image
     @objc public var selectImageBlock: ( ([UIImage], [PHAsset], Bool) -> Void )?
     
+    
+    
+    @objc public var doneRedirectBlock: ((UIViewController?) -> Void)?
     /// Callback for photos that failed to parse
     /// block params
     ///  - params1: failed assets.
@@ -544,22 +547,25 @@ public class ZLPhotoPreviewSheet: UIView {
                     self?.selectImageRequestErrorBlock?(errorAssets, errorIndexs)
                 }
             }
-            
-            if let vc = viewController {
-                self?.isHidden = true
-                self?.animate = false
-                vc.dismiss(animated: true) {
-                    call()
-                    self?.hide()
-                }
+            if let doneRedirectBlock = self?.doneRedirectBlock {
+                call()
+                doneRedirectBlock(viewController)
             } else {
-                self?.hide(completion: {
-                    call()
-                })
+                if let vc = viewController {
+                    self?.isHidden = true
+                    self?.animate = false
+                    vc.dismiss(animated: true) {
+                        call()
+                        self?.hide()
+                    }
+                } else {
+                    self?.hide(completion: {
+                        call()
+                    })
+                }
+                self?.arrSelectedModels.removeAll()
+                self?.arrDataSources.removeAll()
             }
-            
-            self?.arrSelectedModels.removeAll()
-            self?.arrDataSources.removeAll()
         }
         
         guard ZLPhotoConfiguration.default().shouldAnialysisAsset else {

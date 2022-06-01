@@ -78,7 +78,7 @@ public class ZLFilter: NSObject {
     
     public var name: String
     
-    let applier: ZLFilterApplierType?
+    public let applier: ZLFilterApplierType?
     
     @objc public init(name: String, filterType: ZLFilterType) {
         self.name = name
