@@ -118,7 +118,11 @@ class ZLAlbumListController: UIViewController, UITableViewDataSource, UITableVie
         navView.cancelBlock = { [weak self] in
             let nav = self?.navigationController as? ZLImageNavController
             nav?.cancelBlock?()
-            nav?.dismiss(animated: true, completion: nil)
+            if let back = ZLPhotoConfiguration.default().navBackClick {
+                back()
+            } else {
+                nav?.dismiss(animated: true, completion: nil)
+            }
         }
         view.addSubview(navView)
     }

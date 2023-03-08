@@ -150,7 +150,8 @@ public class ZLPhotoConfiguration: NSObject {
             pri_allowEditVideo = newValue
         }
     }
-    
+    @objc public var navBackClick: (() -> Void)?
+
     /// Control whether to display the selection button animation when selecting. Defaults to true.
     @objc public var animateSelectBtnWhenSelect = true
     

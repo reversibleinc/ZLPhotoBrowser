@@ -82,7 +82,7 @@ public class ZLProgressHUD: UIView {
     
     let style: ZLProgressHUD.HUDStyle
     
-    var timeoutBlock: ( () -> Void )?
+    public var timeoutBlock: ( () -> Void )?
     
     var timer: Timer?
     

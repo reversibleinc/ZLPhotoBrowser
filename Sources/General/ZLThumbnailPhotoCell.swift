@@ -116,8 +116,9 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         self.contentView.addSubview(self.bottomShadowView)
         
         self.videoTag = UIImageView(image: getImage("zl_video"))
-        self.bottomShadowView.addSubview(self.videoTag)
-        
+
+//        self.bottomShadowView.addSubview(self.videoTag)
+    
         self.livePhotoTag = UIImageView(image: getImage("zl_livePhoto"))
         self.bottomShadowView.addSubview(self.livePhotoTag)
         
@@ -145,10 +146,10 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
         self.btnSelect.frame = CGRect(x: self.bounds.width - 30, y: 8, width: 23, height: 23)
         self.indexLabel.frame = self.btnSelect.bounds
         self.bottomShadowView.frame = CGRect(x: 0, y: self.bounds.height - 25, width: self.bounds.width, height: 25)
-        self.videoTag.frame = CGRect(x: 5, y: 1, width: 20, height: 15)
+        self.videoTag.frame = CGRect(x: 5, y: 3, width: 20, height: 15)
         self.livePhotoTag.frame = CGRect(x: 5, y: -1, width: 20, height: 20)
         self.editImageTag.frame = CGRect(x: 5, y: -1, width: 20, height: 20)
-        self.descLabel.frame = CGRect(x: 30, y: 1, width: self.bounds.width - 35, height: 17)
+        self.descLabel.frame = CGRect(x: 30, y: 3, width: self.bounds.width - 35, height: 17)
         self.progressView.frame = CGRect(x: (self.bounds.width - 20)/2, y: (self.bounds.height - 20)/2, width: 20, height: 20)
         
         super.layoutSubviews()
@@ -264,6 +265,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
             if !isDegraded {
                 self?.smallImageRequestID = PHInvalidImageRequestID
             }
+            self?.model.smallImage = image
         })
     }
     
@@ -281,6 +283,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
             } else {
                 self?.cancelFetchBigImage()
             }
+
         }, completion: { [weak self] (_, _, _) in
             self?.resetProgressViewStatus()
         })

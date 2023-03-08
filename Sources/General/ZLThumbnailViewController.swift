@@ -205,7 +205,7 @@ class ZLThumbnailViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        view.layer.masksToBounds = true
         let navViewNormalH: CGFloat = 44
         
         var insets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
@@ -675,7 +675,7 @@ class ZLThumbnailViewController: UIViewController {
         if nav.arrSelectedModels.count > 0 {
             self.previewBtn.isEnabled = true
             self.doneBtn.isEnabled = true
-            let doneTitle = localLanguageTextValue(.done) + "(" + String(nav.arrSelectedModels.count) + ")"
+            let doneTitle = localLanguageTextValue(.done) + "（" + String(nav.arrSelectedModels.count) + "）"
             self.doneBtn.setTitle(doneTitle, for: .normal)
             self.doneBtn.backgroundColor = .bottomToolViewBtnNormalBgColor
         } else {
@@ -981,6 +981,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
         if ZLPhotoConfiguration.default().showSelectedIndex {
             for (index, selM) in (nav?.arrSelectedModels ?? []).enumerated() {
                 if model == selM {
+                    model.selectedIndex = index + 1
                     self.setCellIndex(cell, showIndexLabel: true, index: index + 1)
                     break
                 }
@@ -1118,6 +1119,7 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                 }
             }
             if showIndex {
+                m.selectedIndex = idx
                 self.setCellIndex(cell, showIndexLabel: show, index: idx)
             }
             if showMask {

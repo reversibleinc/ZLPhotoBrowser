@@ -49,8 +49,10 @@ public class ZLPhotoModel: NSObject {
     public var type: ZLPhotoModel.MediaType = .unknown
     
     public var duration: String = ""
-    
+
     public var isSelected: Bool = false
+    
+    public var selectedIndex: Int = 0
     
     private var pri_editImage: UIImage? = nil
     public var editImage: UIImage? {
@@ -65,6 +67,11 @@ public class ZLPhotoModel: NSObject {
             }
         }
     }
+    
+    public var smallImage: UIImage?
+
+    public var bigImage: UIImage?
+
     
     public var second: Second {
         guard type == .video else {
