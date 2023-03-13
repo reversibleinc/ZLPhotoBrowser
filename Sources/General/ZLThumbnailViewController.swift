@@ -968,6 +968,9 @@ extension ZLThumbnailViewController: UICollectionViewDataSource, UICollectionVie
                     cell?.btnSelect.isSelected = true
                     self?.refreshCellIndexAndMaskView()
                 }
+                if currentSelectCount == 0 && ZLPhotoConfiguration.default().maxSelectCount == 1 {
+                    self?.doneBtnClick()
+                }
             } else {
                 cell?.btnSelect.isSelected = false
                 model.isSelected = false
