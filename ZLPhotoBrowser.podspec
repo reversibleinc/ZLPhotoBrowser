@@ -27,6 +27,12 @@ Pod::Spec.new do |s|
   s.frameworks            = 'UIKit','Photos','PhotosUI','AVFoundation','CoreMotion', 'Accelerate'
 
   s.resources             = 'Sources/*.{png,bundle}'
+  
+  s.dependency "SnapKit"
+  s.dependency "PanModal"
+  s.dependency "ReversibleCommon"
+
+
 
   s.subspec "Core" do |sp|
     sp.source_files  = ["Sources/**/*.swift", "Sources/ZLPhotoBrowser.h"]

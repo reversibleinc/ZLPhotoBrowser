@@ -277,7 +277,7 @@ class ZLPhotoPreviewController: UIViewController {
             self.bottomView.addSubview(self.bottomBlurView!)
         }
         
-        if config.showSelectedPhotoPreview {
+        if config.showSelectedPhotoPreview, self.currentIndex < self.arrDataSources.count {
             let nav = self.navigationController as! ZLImageNavController
             self.selPhotoPreview = ZLPhotoPreviewSelectedView(selModels: nav.arrSelectedModels, currentShowModel: self.arrDataSources[self.currentIndex])
             self.selPhotoPreview?.selectBlock = { [weak self] (model) in
@@ -608,7 +608,7 @@ class ZLPhotoPreviewController: UIViewController {
         let vc = ZLEditVideoViewController(avAsset: avAsset)
         vc.modalPresentationStyle = .fullScreen
         
-        vc.editFinishBlock = { [weak self, weak nav] (url) in
+        vc.editFinishBlock = { [weak self, weak nav] (url,_, _) in
             if let u = url {
                 ZLPhotoManager.saveVideoToAlbum(url: u) { [weak self, weak nav] (suc, asset) in
                     if suc, asset != nil {

@@ -34,7 +34,7 @@ struct ZLLayout {
     
     static let bottomToolViewH: CGFloat = 55
     
-    static let bottomToolBtnH: CGFloat = 34
+    static let bottomToolBtnH: CGFloat = 30
     
     static let bottomToolBtnY: CGFloat = 10
     

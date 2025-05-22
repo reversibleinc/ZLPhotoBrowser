@@ -50,7 +50,11 @@ public class ZLPhotoConfiguration: NSObject {
     @objc public var style: ZLPhotoBrowserStyle = .embedAlbumList
     
     @objc public var statusBarStyle: UIStatusBarStyle = .lightContent
+    /// show bottom tool bar
+    public var showBottomToolBar: Bool?
     
+    public var defaultAlbumTab: Bool = false
+
     /// text: Cancel.  image: 'x'. Default to text.
     @objc public var navCancelButtonStyle: ZLPhotoConfiguration.CancelButtonStyle = .text
     

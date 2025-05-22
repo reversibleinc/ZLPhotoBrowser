@@ -26,8 +26,9 @@
 
 import UIKit
 import Photos
+import PanModal
 
-class ZLImageNavController: UINavigationController {
+public class ZLImageNavController: UINavigationController {
 
     var isSelectedOriginal: Bool = false
     
@@ -41,7 +42,7 @@ class ZLImageNavController: UINavigationController {
         zl_debugPrint("ZLImageNavController deinit")
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         return ZLPhotoConfiguration.default().statusBarStyle
     }
     
@@ -66,7 +67,7 @@ class ZLImageNavController: UINavigationController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -84,3 +85,49 @@ class ZLImageNavController: UINavigationController {
     }
 
 }
+
+extension ZLImageNavController: PanModalPresentable {
+    
+    public var panScrollable: UIScrollView? {
+        return (topViewController as? PanModalPresentable)?.panScrollable
+    }
+    
+    public var allowsDragToDismiss: Bool {
+        return (topViewController as? PanModalPresentable)?.allowsDragToDismiss ?? true
+    }
+    public var allowsExtendedPanScrolling: Bool {
+        return (topViewController as? PanModalPresentable)?.allowsExtendedPanScrolling ?? true
+    }
+
+    public var shouldRoundTopCorners: Bool {
+        return (topViewController as? PanModalPresentable)?.shouldRoundTopCorners ?? true
+    }
+
+    public var showDragIndicator: Bool {
+        return (topViewController as? PanModalPresentable)?.showDragIndicator ?? false
+
+    }
+    
+    public var cornerRadius: CGFloat {
+        return (topViewController as? PanModalPresentable)?.cornerRadius ?? 20
+    }
+
+    public var longFormHeight: PanModalHeight {
+        // intrinsicHeight 15.X系统会有问题
+        if let height = (topViewController as? PanModalPresentable)?.longFormHeight {
+            return height
+        }
+        if #available(iOS 15.0, *) {
+            return .maxHeight
+        } else {
+            return .intrinsicHeight
+        }
+    }
+    public var shortFormHeight: PanModalHeight {
+        if let height = (topViewController as? PanModalPresentable)?.shortFormHeight {
+            return height
+        }
+        return longFormHeight
+    }
+}
+

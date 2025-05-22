@@ -32,4 +32,11 @@ extension Int {
         self = bool ? 1 : 0
     }
     
+    var twoDigitString: String {
+        if self < 10 {
+            return "0\(self)"
+        } else {
+            return "\(self)"
+        }
+    }
 }

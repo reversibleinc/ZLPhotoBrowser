@@ -240,8 +240,7 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
             self.fetchSmallImage()
         }
     }
-    
-    func fetchSmallImage() {
+    func fetchSmallImage(complete: @escaping () -> Void) {
         let size: CGSize
         let maxSideLength = self.bounds.width * 1.2
         if self.model.whRatio > 1 {
@@ -266,7 +265,13 @@ class ZLThumbnailPhotoCell: UICollectionViewCell {
                 self?.smallImageRequestID = PHInvalidImageRequestID
             }
             self?.model.smallImage = image
+            complete()
         })
+    }
+    func fetchSmallImage() {
+        fetchSmallImage {
+            
+        }
     }
     
     func fetchBigImage() {

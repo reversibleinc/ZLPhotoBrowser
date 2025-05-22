@@ -25,7 +25,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-
+import ReversibleCommon
 @objc public enum ZLLanguageType: Int {
     case system
     case chineseSimplified
@@ -234,8 +234,12 @@ public struct ZLLocalLanguageKey: Hashable {
 }
 
 public func localLanguageTextValue(_ key: ZLLocalLanguageKey) -> String {
-    if let value = ZLCustomLanguageDeploy.deploy[key] {
+    let appLocalized = key.rawValue.localized()
+    if  appLocalized != key.rawValue {
+        return appLocalized
+    } else if let value = ZLCustomLanguageDeploy.deploy[key] {
         return value
     }
+    
     return Bundle.zlLocalizedString(key.rawValue)
 }

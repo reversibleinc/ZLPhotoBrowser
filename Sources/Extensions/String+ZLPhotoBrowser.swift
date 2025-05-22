@@ -43,4 +43,17 @@ extension String {
         return CGSize(width: ceil(size.width) * 1.1, height: ceil(size.height))
     }
     
+    /// Character count
+    public var length: Int {
+        return self.count
+    }
+    
+    public func uppercasedPrefix(_ count: Int) -> String {
+        guard self.count > 0 && count > 0 else { return self }
+        var result = self
+        result.replaceSubrange(startIndex..<self.index(startIndex, offsetBy: min(count, length)),
+                               with: String(self[startIndex..<self.index(startIndex, offsetBy: min(count, length))]).uppercased())
+        return result
+    }
+    
 }

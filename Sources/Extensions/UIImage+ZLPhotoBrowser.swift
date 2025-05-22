@@ -417,6 +417,9 @@ extension UIImage {
     }
     
    public func clipImage(angle: CGFloat, editRect: CGRect, isCircle: Bool) -> UIImage? {
+       if editRect.size.width * editRect.size.height <= 0 {
+           return nil
+       }
         let a = ((Int(angle) % 360) - 360) % 360
         var newImage = self
         if a == -90 {

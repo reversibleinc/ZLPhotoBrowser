@@ -32,4 +32,33 @@ extension CGFloat {
         return self / 180 * .pi
     }
     
+    var toInt: Int { return Int(self) }
+    
+    func durationString() -> String {
+        
+        let day: Int = self.toInt / (60 * 60 * 24)
+        let hour: Int = (self.toInt - day * (60 * 60 * 24)) / (60 * 60)
+        let minute: Int = (self.toInt - day * (60 * 60 * 24) - hour * (60 * 60)) / 60
+        let second: Int = self.toInt - day * (60 * 60 * 24) - hour * (60 * 60) - minute * 60
+        var timeString = ""
+        if day >= 1 {
+            timeString += "\(day) day "
+        }
+        if hour >= 1 {
+            timeString += "\(hour.twoDigitString)"
+        }
+        
+        if minute >= 0 {
+            if hour >= 1 {
+                timeString += ":"
+            }
+            timeString += "\(minute.twoDigitString)"
+        }
+        
+        if second >= 1 {
+            timeString += ":\(second.twoDigitString)"
+        }
+        return timeString
+    }
+    
 }

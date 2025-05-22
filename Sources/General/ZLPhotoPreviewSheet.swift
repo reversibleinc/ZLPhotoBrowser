@@ -615,7 +615,11 @@ public class ZLPhotoPreviewSheet: UIView {
             let nav: ZLImageNavController
             if ZLPhotoConfiguration.default().style == .embedAlbumList {
                 let tvc = ZLThumbnailViewController(albumList: cameraRoll)
-                nav = self.getImageNav(rootViewController: tvc)
+                let camera = ZLCustomCamera()
+                camera.thumbnailsVC = tvc
+                let mainVC = ZLPhotoMainViewController(childVCs: [("album".localized("Album").uppercasedPrefix(1), tvc), ("camera".localized("Camera").uppercasedPrefix(1), camera)])
+                mainVC.curChildTitle = ZLPhotoConfiguration.default().defaultAlbumTab ? "album".localized("Album").uppercasedPrefix(1) : "camera".localized("Camera").uppercasedPrefix(1)
+                nav = self.getImageNav(rootViewController: mainVC)
             } else {
                 nav = self.getImageNav(rootViewController: ZLAlbumListController())
                 let tvc = ZLThumbnailViewController(albumList: cameraRoll)
@@ -681,7 +685,7 @@ public class ZLPhotoPreviewSheet: UIView {
         
         func inner_showEditVideoVC(_ avAsset: AVAsset) {
             let vc = ZLEditVideoViewController(avAsset: avAsset)
-            vc.editFinishBlock = { [weak self] (url) in
+            vc.editFinishBlock = { [weak self] (url, _, _) in
                 if let u = url {
                     ZLPhotoManager.saveVideoToAlbum(url: u) { [weak self] (suc, asset) in
                         if suc, asset != nil {

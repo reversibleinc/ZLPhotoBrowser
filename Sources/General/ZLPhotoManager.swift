@@ -62,7 +62,7 @@ public class ZLPhotoManager: NSObject {
             completion?(false, nil)
             return
         }
-        
+
         var placeholderAsset: PHObjectPlaceholder? = nil
         PHPhotoLibrary.shared().performChanges({
             let newAssetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
@@ -73,6 +73,7 @@ public class ZLPhotoManager: NSObject {
                     let asset = self.getAsset(from: placeholderAsset?.localIdentifier)
                     completion?(suc, asset)
                 } else {
+                    showAlertView(error?.localizedDescription ?? "", nil)
                     completion?(false, nil)
                 }
             }
@@ -173,7 +174,7 @@ public class ZLPhotoManager: NSObject {
             option.predicate = NSPredicate(format: "mediaType == %ld", PHAssetMediaType.image.rawValue)
         }
         
-        let smartAlbums = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+        let smartAlbums = PHAssetCollection.fetchAssetCollections(with: .album, subtype: .albumRegular, options: nil)
         smartAlbums.enumerateObjects { (collection, _, stop) in
             if collection.assetCollectionSubtype == .smartAlbumUserLibrary {
                 let result = PHAsset.fetchAssets(in: collection, options: option)

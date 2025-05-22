@@ -30,12 +30,12 @@ import Photos
 
 public class ZLVideoManager: NSObject {
     
-    class func getVideoExportFilePath() -> String {
+   public class func getVideoExportFilePath() -> String {
         let format = ZLPhotoConfiguration.default().cameraConfiguration.videoExportType.format
         return NSTemporaryDirectory().appendingFormat("%@.%@", UUID().uuidString, format)
     }
     
-    class func exportEditVideo(for asset: AVAsset, range: CMTimeRange, complete: @escaping ( (URL?, Error?) -> Void )) {
+    public class func exportEditVideo(for asset: AVAsset, range: CMTimeRange, complete: @escaping ( (URL?, Error?) -> Void )) {
         let type: ZLVideoManager.ExportType = ZLPhotoConfiguration.default().cameraConfiguration.videoExportType == .mov ? .mov : .mp4
         self.exportVideo(for: asset, range: range, exportType: type, presetName: AVAssetExportPresetPassthrough) { url, error in
             if url != nil {
@@ -45,6 +45,45 @@ public class ZLVideoManager: NSObject {
             }
         }
     }
+    
+    
+    
+    public class func getVideoFirstFrame(for url: URL) -> UIImage? {
+        let asset = AVURLAsset(url: url)
+        return getVideoFirstFrame(for: asset)
+    }
+    
+    public class func getVideoImageFrameAsync(for asset: AVAsset, time: CMTime, complete: @escaping (UIImage?) -> Void) {
+        let imageG = AVAssetImageGenerator(asset: asset)
+        imageG.appliesPreferredTrackTransform = true
+        imageG.apertureMode = .encodedPixels
+        imageG.generateCGImagesAsynchronously(forTimes: [NSValue(time: time)]) { _, cgImage, _, _, _ in
+            if let cgImage = cgImage {
+                let image = UIImage(cgImage: cgImage)
+                complete(image)
+            } else {
+                complete(nil)
+            }
+        }
+    }
+    public class func getVideoImageFrame(for asset: AVAsset, time: CMTime, size: CGSize? = nil) -> UIImage? {
+        let imageG = AVAssetImageGenerator(asset: asset)
+        imageG.appliesPreferredTrackTransform = true
+        imageG.apertureMode = .encodedPixels
+        if let size = size {
+            imageG.maximumSize = size
+        }
+        if let cgImage = try? imageG.copyCGImage(at: time, actualTime: nil) {
+            let image = UIImage(cgImage: cgImage)
+            return image
+        }
+        return nil
+    }
+    
+    public class func getVideoFirstFrame(for asset: AVURLAsset) -> UIImage? {
+        return getVideoImageFrame(for: asset, time: CMTime(value: 0, timescale: 60))
+    }
+    
     
     /// 没有针对不同分辨率视频做处理，仅用于处理相机拍照的视频
     @objc public class func mergeVideos(fileUrls: [URL], completion: @escaping ( (URL?, Error?) -> Void )) {
